@@ -21,7 +21,6 @@ return [
         '@move'           => '/stock/move',
         '@hwconfig'       => '/stock/hwconfig',
         '@order'          => '/stock/order',
-        '@installment-plan' => '/finance/installment-plan',
     ],
     'modules' => [
         'stock' => [
@@ -29,11 +28,6 @@ return [
         ],
     ],
     'components' => [
-        'urlManager' => [
-            'rules' => [
-                'stock/installment-plan/<action:[\w-]+>' => 'finance/installment-plan/<action>',
-            ],
-        ],
         'request' => [
             'parsers' => [
                 'application/json' => yii\web\JsonParser::class,
