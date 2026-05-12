@@ -43,5 +43,11 @@ test.describe("Model Hardware Properties", () => {
     await expect(managerPage.locator("th:has-text(\"Max RAM\") + td")).toHaveText(hwProps.max_ram_size);
     await expect(managerPage.locator("th:has-text(\"RAM slots\") + td")).toHaveText(hwProps.ram_slots);
     await expect(managerPage.locator("th:has-text(\"CPU sockets\") + td")).toHaveText(hwProps.cpu_sockets);
+
+    // Navigate back to the update form and verify the fields are pre-populated
+    await managerPage.goto(`/stock/model/update?id=${modelId}`);
+    await expect(managerPage.locator("input[id=model-0-props-motherboard-max_ram_size]")).toHaveValue(hwProps.max_ram_size);
+    await expect(managerPage.locator("input[id=model-0-props-motherboard-ram_slots]")).toHaveValue(hwProps.ram_slots);
+    await expect(managerPage.locator("input[id=model-0-props-motherboard-cpu_sockets]")).toHaveValue(hwProps.cpu_sockets);
   });
 });
