@@ -21,13 +21,13 @@ test.describe("Model Hardware Properties", () => {
     await managerPage.goto(`/stock/model/update?id=${modelId}`);
 
     // The motherboard hardware properties subform should be visible on the update form
-    const maxRamInput = managerPage.locator("input[id=model-0-props-motherboard-max_ram_size]");
+    const maxRamInput = managerPage.locator("input[id=model-0-props-max_ram_size]");
     await expect(maxRamInput).toBeVisible();
 
     // Fill in the hardware property fields
     await maxRamInput.fill(hwProps.max_ram_size);
-    await managerPage.locator("input[id=model-0-props-motherboard-ram_slots]").fill(hwProps.ram_slots);
-    await managerPage.locator("input[id=model-0-props-motherboard-cpu_sockets]").fill(hwProps.cpu_sockets);
+    await managerPage.locator("input[id=model-0-props-ram_slots]").fill(hwProps.ram_slots);
+    await managerPage.locator("input[id=model-0-props-cpu_sockets]").fill(hwProps.cpu_sockets);
 
     // Save the form
     await managerPage.locator("button:has-text(\"Save\")").click();
@@ -46,8 +46,8 @@ test.describe("Model Hardware Properties", () => {
 
     // Navigate back to the update form and verify the fields are pre-populated
     await managerPage.goto(`/stock/model/update?id=${modelId}`);
-    await expect(managerPage.locator("input[id=model-0-props-motherboard-max_ram_size]")).toHaveValue(hwProps.max_ram_size);
-    await expect(managerPage.locator("input[id=model-0-props-motherboard-ram_slots]")).toHaveValue(hwProps.ram_slots);
-    await expect(managerPage.locator("input[id=model-0-props-motherboard-cpu_sockets]")).toHaveValue(hwProps.cpu_sockets);
+    await expect(managerPage.locator("input[id=model-0-props-max_ram_size]")).toHaveValue(hwProps.max_ram_size);
+    await expect(managerPage.locator("input[id=model-0-props-ram_slots]")).toHaveValue(hwProps.ram_slots);
+    await expect(managerPage.locator("input[id=model-0-props-cpu_sockets]")).toHaveValue(hwProps.cpu_sockets);
   });
 });
