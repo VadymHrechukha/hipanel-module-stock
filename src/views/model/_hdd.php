@@ -1,9 +1,10 @@
 <?php
+
 use yii\helpers\Html;
 
 ?>
 
 <div class="form-group">
-    <label><?= Html::activeLabel($model, 'FORMFACTOR')?></label>
-    <?= Html::activeTextInput($model, "[$i][props]FORMFACTOR", ['class' => 'form-control', 'value' => $model->props['FORMFACTOR'] ?? null]) ?>
+    <label class="control-label"><?= $model->getAttributeLabel('formfactor') ?></label>
+    <?= Html::activeTextInput($model, "[$i]props[hdd][formfactor]", ['class' => 'form-control', 'value' => $model->props['hdd']['formfactor'] ?? null]) ?>
 </div>

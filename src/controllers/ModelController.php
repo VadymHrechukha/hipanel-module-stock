@@ -13,10 +13,10 @@ namespace hipanel\modules\stock\controllers;
 
 use Closure;
 use hipanel\actions\IndexAction;
-use hipanel\actions\SmartCreateAction;
 use hipanel\actions\SmartDeleteAction;
 use hipanel\actions\SmartPerformAction;
-use hipanel\actions\SmartUpdateAction;
+use hipanel\modules\stock\actions\ModelCreateAction;
+use hipanel\modules\stock\actions\ModelUpdateAction;
 use hipanel\actions\ValidateFormAction;
 use hipanel\actions\ViewAction;
 use hipanel\base\CrudController;
@@ -84,7 +84,7 @@ class ModelController extends CrudController
                 'class' => HardwareSettingsAction::class,
             ],
             'create' => [
-                'class' => SmartCreateAction::class,
+                'class' => ModelCreateAction::class,
                 'success' => Yii::t('hipanel:stock', 'Model has been created'),
                 'data' => function ($action) {
                     return [
@@ -94,7 +94,7 @@ class ModelController extends CrudController
                 },
             ],
             'update' => [
-                'class' => SmartUpdateAction::class,
+                'class' => ModelUpdateAction::class,
                 'success' => Yii::t('hipanel:stock', 'Model has been updated'),
                 'data' => function ($action) {
                     return [
@@ -104,7 +104,7 @@ class ModelController extends CrudController
                 },
             ],
             'copy' => [
-                'class' => SmartUpdateAction::class,
+                'class' => ModelUpdateAction::class,
                 'scenario' => Model::SCENARIO_COPY,
                 'success' => Yii::t('hipanel:stock', 'Model has been updated'),
                 'data' => function ($action) {
