@@ -8,31 +8,6 @@ use Yii;
 
 class ModelUpdateAction extends SmartUpdateAction
 {
-    public function fetchModels()
-    {
-        $models = parent::fetchModels();
-
-        foreach ($models as $model) {
-            if (!empty($model->props) && is_array($model->props)) {
-                $model->props = $this->nestProps($model->props);
-            }
-        }
-
-        return $models;
-    }
-
-    private function nestProps(array $flatProps): array
-    {
-        $nested = [];
-        foreach ($flatProps as $key => $value) {
-            [$type, $attr] = explode(':', $key, 2) + [1 => null];
-            if ($attr !== null) {
-                $nested[$type][$attr] = $value;
-            }
-        }
-        return $nested;
-    }
-
     public function saveCollection()
     {
         $pendingHardwareSettings = $this->collectHardwareSettings();
