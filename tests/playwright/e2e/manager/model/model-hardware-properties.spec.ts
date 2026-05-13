@@ -13,15 +13,15 @@ const modelTypeProps: { type: string; props: HardwareProp[] }[] = [
   {
     type: "server",
     props: [
-      { name: "units_qty",  viewLabel: "Units Qty",      value: "2" },
-      { name: "25_hdd_qty", viewLabel: "25 Hdd Qty", value: "4" },
+      { name: "units_qty",  viewLabel: "Units Qty",   value: "2" },
+      { name: "25_hdd_qty", viewLabel: "25 Hdd Qty",  value: "4" },
       { name: "35_hdd_qty", viewLabel: "35 Hdd Qty",  value: "8" },
     ],
   },
   {
     type: "chassis",
     props: [
-      { name: "units_qty",  viewLabel: "Units Qty",      value: "2" },
+      { name: "units_qty",  viewLabel: "Units Qty",   value: "2" },
       { name: "25_hdd_qty", viewLabel: "25 Hdd Qty",  value: "4" },
       { name: "35_hdd_qty", viewLabel: "35 Hdd Qty",  value: "8" },
     ],
