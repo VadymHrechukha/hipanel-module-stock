@@ -23,6 +23,7 @@ use yii\helpers\Html;
  *
  * @property string $type
  * @property string $name
+ * @property array $props
  */
 class Model extends YiiModel
 {
@@ -244,5 +245,10 @@ class Model extends YiiModel
     public function isDeleted(): bool
     {
         return $this->state === self::STATE_DELETED;
+    }
+
+    public function getModelProp(string $propName): ?string
+    {
+        return $this->props[$this->type . ':' . $propName] ?? null;
     }
 }

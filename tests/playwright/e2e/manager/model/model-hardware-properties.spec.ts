@@ -1,53 +1,66 @@
 import { test } from "@hipanel-core/fixtures";
-import { expect } from "@playwright/test";
-import { Alert } from "@hipanel-core/shared/ui/components";
+import ModelUpdateView, { HardwareProp } from "@hipanel-module-stock/page/ModelUpdateView";
 
-const hwProps = {
-  max_ram_size: "512",
-  ram_slots: "8",
-  cpu_sockets: "2",
-};
+const modelTypeProps: { type: string; props: HardwareProp[] }[] = [
+  {
+    type: "motherboard",
+    props: [
+      { name: "max_ram_size", viewLabel: "Max RAM",     value: "512" },
+      { name: "ram_slots",    viewLabel: "RAM slots",   value: "8"   },
+      { name: "cpu_sockets",  viewLabel: "CPU sockets", value: "2"   },
+    ],
+  },
+  {
+    type: "server",
+    props: [
+      { name: "units_qty",  viewLabel: "Units Qty",      value: "2" },
+      { name: "25_hdd_qty", viewLabel: "25 Hdd Qty", value: "4" },
+      { name: "35_hdd_qty", viewLabel: "35 Hdd Qty",  value: "8" },
+    ],
+  },
+  {
+    type: "chassis",
+    props: [
+      { name: "units_qty",  viewLabel: "Units Qty",      value: "2" },
+      { name: "25_hdd_qty", viewLabel: "25 Hdd Qty",  value: "4" },
+      { name: "35_hdd_qty", viewLabel: "35 Hdd Qty",  value: "8" },
+    ],
+  },
+  {
+    type: "hdd",
+    props: [
+      { name: "formfactor", viewLabel: "Formfactor", value: "3.5" },
+    ],
+  },
+  {
+    type: "ssd",
+    props: [
+      { name: "formfactor", viewLabel: "Formfactor", value: "2.5" },
+    ],
+  },
+  {
+    type: "ram",
+    props: [
+      { name: "size", viewLabel: "Size", value: "32" },
+    ],
+  },
+];
 
 test.describe("Model Hardware Properties", () => {
-  test("Motherboard hardware properties are saved and displayed after update @hipanel-module-stock @manager", async ({ managerPage }) => {
-    // Find a motherboard model in the index
-    await managerPage.goto("/stock/model/index?ModelSearch[type]=motherboard");
-    const firstRow = managerPage.locator("table tbody tr").first();
-    await expect(firstRow).toBeVisible();
-    const modelId = await firstRow.getAttribute("data-key");
-    expect(modelId, "No motherboard models found in the index").not.toBeNull();
+  for (const { type, props } of modelTypeProps) {
+    test(`${type} hardware properties are saved and displayed after update @hipanel-module-stock @manager`, async ({ managerPage }) => {
+      const modelView = new ModelUpdateView(managerPage);
+      const modelId = await modelView.findFirstModelIdOfType(type);
 
-    // Open the update form for the motherboard model
-    await managerPage.goto(`/stock/model/update?id=${modelId}`);
+      await modelView.openUpdateForm(modelId);
+      await modelView.fillProps(props);
+      await modelView.save();
 
-    // The motherboard hardware properties subform should be visible on the update form
-    const maxRamInput = managerPage.locator("input[id=model-0-props-max_ram_size]");
-    await expect(maxRamInput).toBeVisible();
+      await modelView.openViewPage(modelId);
+      await modelView.assertViewProps(props);
 
-    // Fill in the hardware property fields
-    await maxRamInput.fill(hwProps.max_ram_size);
-    await managerPage.locator("input[id=model-0-props-ram_slots]").fill(hwProps.ram_slots);
-    await managerPage.locator("input[id=model-0-props-cpu_sockets]").fill(hwProps.cpu_sockets);
-
-    // Save the form
-    await managerPage.locator("button:has-text(\"Save\")").click();
-
-    // Verify the model was updated successfully
-    await Alert.on(managerPage).hasText("Model has been updated");
-
-    // Navigate to the model view page to verify hardware properties are displayed
-    await managerPage.goto(`/stock/model/view?id=${modelId}`);
-
-    // The Hardware Properties panel loads its content via AJAX after page load.
-    // Playwright auto-waits on these assertions, so they will pass once AJAX completes.
-    await expect(managerPage.locator("th:has-text(\"Max RAM\") + td")).toHaveText(hwProps.max_ram_size);
-    await expect(managerPage.locator("th:has-text(\"RAM slots\") + td")).toHaveText(hwProps.ram_slots);
-    await expect(managerPage.locator("th:has-text(\"CPU sockets\") + td")).toHaveText(hwProps.cpu_sockets);
-
-    // Navigate back to the update form and verify the fields are pre-populated
-    await managerPage.goto(`/stock/model/update?id=${modelId}`);
-    await expect(managerPage.locator("input[id=model-0-props-max_ram_size]")).toHaveValue(hwProps.max_ram_size);
-    await expect(managerPage.locator("input[id=model-0-props-ram_slots]")).toHaveValue(hwProps.ram_slots);
-    await expect(managerPage.locator("input[id=model-0-props-cpu_sockets]")).toHaveValue(hwProps.cpu_sockets);
-  });
+      await modelView.openUpdateForm(modelId);
+      await modelView.assertFormProps(props);
+    });
+  }
 });
