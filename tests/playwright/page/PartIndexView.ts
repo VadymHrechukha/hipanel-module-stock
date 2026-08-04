@@ -1,5 +1,6 @@
 import { expect, Page } from "@playwright/test";
 import Index from "@hipanel-core/page/Index";
+import { Modal } from "@hipanel-core/shared/ui/components";
 
 export default class PartIndexView {
   private index: Index;
@@ -24,6 +25,14 @@ export default class PartIndexView {
     await this.index.advancedSearch.applyFilter("serial_ilike", serial);
   }
 
+  async filterDeletedBySerial(serial: string) {
+    // Yii renders the "show_deleted" checkbox alongside a same-named hidden
+    // input, so the generic name-based filter locator matches two elements.
+    await this.index.advancedSearch.setFilter("serial_ilike", serial);
+    await this.page.getByLabel("Show Deleted Parts").check();
+    await this.index.submitSearchButton();
+  }
+
   async selectPartsToReplace(count: number) {
     await this.selectRows(count);
     await this.index.clickDropdownBulkButton("Bulk actions", "Replace");
@@ -46,6 +55,28 @@ export default class PartIndexView {
 
     this.page.on("dialog", async dialog => await dialog.accept());
     await this.index.hasNotification("Part has been deleted");
+  }
+
+  async bulkMarkAsDeleted(count: number) {
+    await this.selectRows(count);
+    await this.index.clickDropdownBulkButton("Bulk actions", "Mark as Deleted");
+
+    await this.confirmBulkModalAction("Delete");
+    await this.index.hasNotification("Part has been deleted");
+  }
+
+  async bulkErase(count: number) {
+    await this.selectRows(count);
+    await this.index.clickDropdownBulkButton("Bulk actions", "Erase");
+
+    await this.confirmBulkModalAction("Erase");
+    await this.index.hasNotification("Part has been erased");
+  }
+
+  private async confirmBulkModalAction(buttonText: string) {
+    const modal = new Modal(this.page);
+    await modal.waitForOpen();
+    await modal.clickButton(buttonText);
   }
 
   async chooseNumberRowOnTable(number: number) {
