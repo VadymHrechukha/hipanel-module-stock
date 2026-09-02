@@ -6,7 +6,6 @@ use hipanel\modules\stock\grid\PartGridLegend;
 use hipanel\modules\stock\grid\PartGridView;
 use hipanel\modules\stock\grid\PartRepresentations;
 use hipanel\modules\stock\models\PartSearch;
-use hipanel\modules\stock\widgets\FastMoveModal;
 use hipanel\widgets\AjaxModal;
 use hipanel\widgets\AjaxModalWithTemplatedButton;
 use hipanel\widgets\gridLegend\GridLegend;
@@ -89,7 +88,6 @@ $showFooter = ($uiModel->representation === 'profit-report')
     <?php $page->beginContent('main-actions') ?>
         <?php if (Yii::$app->user->can('part.create')) : ?>
             <?= Html::a(Yii::t('hipanel', 'Create'), 'create', ['class' => 'btn btn-sm btn-success']) ?>
-            <?= FastMoveModal::widget() ?>
         <?php endif ?>
     <?php $page->endContent() ?>
 
@@ -299,38 +297,6 @@ $showFooter = ($uiModel->representation === 'profit-report')
                         'url' => '#',
                         'linkOptions' => [
                             'data-action' => 'move-by-one',
-                        ],
-                        'visible' => Yii::$app->user->can('move.create'),
-                    ],
-                    [
-                        'label' => Yii::t('hipanel:stock', 'Move by {0}', 2),
-                        'url' => '#',
-                        'linkOptions' => [
-                            'data-action' => 'move?groupBy=2',
-                        ],
-                        'visible' => Yii::$app->user->can('move.create'),
-                    ],
-                    [
-                        'label' => Yii::t('hipanel:stock', 'Move by {0}', 4),
-                        'url' => '#',
-                        'linkOptions' => [
-                            'data-action' => 'move?groupBy=4',
-                        ],
-                        'visible' => Yii::$app->user->can('move.create'),
-                    ],
-                    [
-                        'label' => Yii::t('hipanel:stock', 'Move by {0}', 8),
-                        'url' => '#',
-                        'linkOptions' => [
-                            'data-action' => 'move?groupBy=8',
-                        ],
-                        'visible' => Yii::$app->user->can('move.create'),
-                    ],
-                    [
-                        'label' => Yii::t('hipanel:stock', 'Move by {0}', 16),
-                        'url' => '#',
-                        'linkOptions' => [
-                            'data-action' => 'move?groupBy=16',
                         ],
                         'visible' => Yii::$app->user->can('move.create'),
                     ],

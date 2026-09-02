@@ -157,8 +157,6 @@ return [
     'Edit properties' => 'Редактировать свойства',
     'Last move with descr' => 'Последнее перемещение с опис.',
     'Administrative' => 'Административный',
-    'Fast move' => 'Быстрое перемещение',
-    'Type server names, delimited with a space, comma or a new line' => 'Введите имена серверов через пробел, запятую или с новой строки.',
     'Servers' => 'Имена серверов',
     'Set real serials' => 'Установить настоящие серийные номера',
     'Serials delimited with a space, comma or a new line' => 'Серийные номера, разделенные пробелом, запятой или новой строкой',
