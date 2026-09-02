@@ -25,6 +25,10 @@ export default class PartIndexView {
     await this.index.advancedSearch.applyFilter("serial_ilike", serial);
   }
 
+  async getColumnValue(columnName: string, row: number = 1): Promise<string> {
+    return await this.index.getValueInColumnByNumberRow(columnName, row);
+  }
+
   async filterDeletedBySerial(serial: string) {
     // Yii renders the "show_deleted" checkbox alongside a same-named hidden
     // input, so the generic name-based filter locator matches two elements.
