@@ -343,7 +343,6 @@ class PartController extends CrudController
                     'moveTypes' => $this->getMoveTypes('trash'),
                     'suppliers' => $action->controller->getSuppliers(),
                     'currencyTypes' => $action->controller->getCurrencyTypes(),
-                    'remoteHands' => $this->getRemotehands(),
                     ...$data,
                 ],
             ],
@@ -413,7 +412,6 @@ class PartController extends CrudController
                 'data' => function ($action) {
                     return [
                         'types' => $action->controller->getMoveTypes('move'),
-                        'remotehands' => $action->controller->getRemotehands(),
                     ];
                 },
             ],
@@ -423,7 +421,6 @@ class PartController extends CrudController
                 'view' => 'rma',
                 'data' => fn(RenderAction $action, array $data): array => [
                     'moveTypes' => $this->getMoveTypes('rma'),
-                    'remoteHands' => $this->getRemotehands(),
                     ...$data,
                 ],
             ],
@@ -453,7 +450,6 @@ class PartController extends CrudController
                 'data' => function ($action) {
                     return [
                         'types' => $action->controller->getMoveTypes('move'),
-                        'remotehands' => $action->controller->getRemotehands(),
                     ];
                 },
                 'on beforeSave' => function (Event $event) {
@@ -558,11 +554,6 @@ class PartController extends CrudController
     public function getSuppliers()
     {
         return $this->getRefs('destination,supplier', 'hipanel:stock', ['orderby' => 'name_asc']);
-    }
-
-    public function getRemotehands()
-    {
-        return $this->getRefs('destination,remotehands', 'hipanel:stock', ['orderby' => 'name_asc']);
     }
 
     /**

@@ -6,8 +6,7 @@ use yii\helpers\Html;
 
 /** @var array $models */
 /** @var array $types */
-/** @var array $remotehands */
-/** @var array $remotehands */
+/** @var array $groupedModels */
 
 $scenario = $this->context->action->scenario;
 $this->title = Yii::t('hipanel:stock', 'Bulk move');
