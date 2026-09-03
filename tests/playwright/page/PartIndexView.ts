@@ -47,7 +47,15 @@ export default class PartIndexView {
   }
 
   async confirmReplacement() {
+    await this.confirmReplacementNotification();
+    await this.seeReplacementInGrid();
+  }
+
+  async confirmReplacementNotification() {
     await this.index.hasNotification("Part has been replaced");
+  }
+
+  async seeReplacementInGrid() {
     // await expect(this.page.getByRole('link', { name: 'TRASH_RMA' }).first()).toBeVisible(); // todo: uncomment when HP-2811
     await expect(this.page.getByRole('link', { name: 'REPLACE', exact: true })).toBeVisible();
   }
