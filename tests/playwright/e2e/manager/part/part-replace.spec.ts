@@ -76,10 +76,11 @@ test.describe("Part Replacement", () => {
 
     await partReplacePage.fillReplaceForm([{ serialno: replacementSerial }]);
     await partReplacePage.save();
-    await partIndexPage.confirmReplacement();
 
     await partIndexPage.navigateCommon();
     await partIndexPage.filterBySerial(replacementSerial);
+    await partIndexPage.confirmReplacement();
+
     expect(await partIndexPage.getColumnValue("Warranty till")).toBe(warrantyTill);
   });
 });
